@@ -1,0 +1,37 @@
+{
+  "nav": {
+    "about": "About",
+    "skills": "Skills",
+    "career": "Career",
+    "projects": "Projects"
+  },
+  "hero": {
+    "greeting": "Hello,",
+    "title": "Frontend Developer",
+    "name": "Kim Developer",
+    "subtitle": "",
+    "description": "A passionate frontend developer focused on creating user-centered web experiences. I primarily work with React, TypeScript, and Next.js, pursuing clean and efficient code.",
+    "viewProjects": "View Projects",
+    "contact": "Contact Me",
+    "location": "Seoul, South Korea",
+    "experience": "5 Years Experience"
+  },
+  "skills": {
+    "title": "Tech Stack",
+    "description": "I develop modern and efficient web applications using various technologies."
+  },
+  "career": {
+    "title": "Career",
+    "description": "I have grown through development experience in various environments.",
+    "achievements": "Key Achievements:"
+  },
+  "projects": {
+    "title": "Projects",
+    "description": "Check out my experience and technical skills through various projects.",
+    "github": "GitHub",
+    "demo": "Demo"
+  },
+  "footer": {
+    "copyright": "© 2024 Kim Developer. All rights reserved."
+  }
+}
