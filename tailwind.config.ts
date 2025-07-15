@@ -1,12 +1,9 @@
 /** @type {import('tailwindcss').Config} */
-import tailwindcss from 'tailwindcss'
-import autoprefixer from 'autoprefixer'
+import { Config } from 'tailwindcss'
 
 module.exports = {
-  mode: 'jit',
-  darkmode: ['class'],
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-
+  darkMode: 'class',
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}', './public/**/*.html'],
   theme: {
     extend: {
       colors: {
@@ -91,4 +88,4 @@ module.exports = {
     }
   },
   plugins: [require('tailwindcss-animate')]
-}
+} satisfies Config
