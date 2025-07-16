@@ -1,4 +1,8 @@
 {
+  "about": {
+    "about": "FE 개발자",
+    "name": "사봉석"
+  },
   "nav": {
     "about": "소개",
     "skills": "기술스택",
@@ -8,13 +12,13 @@
   "hero": {
     "greeting": "안녕하세요,",
     "title": "프론트엔드 개발자",
-    "name": "김개발",
+    "name": "사봉석",
     "subtitle": "입니다",
     "description": "사용자 중심의 웹 경험을 만드는 것에 열정을 가진 프론트엔드 개발자입니다. React, TypeScript, Next.js를 주로 사용하며, 깔끔하고 효율적인 코드 작성을 추구합니다.",
     "viewProjects": "프로젝트 보기",
     "contact": "연락하기",
-    "location": "서울, 대한민국",
-    "experience": "5년 경력"
+    "location": "경기도 광명시, 대한민국",
+    "experience": "8년 경력"
   },
   "skills": {
     "title": "기술 스택",
@@ -32,6 +36,6 @@
     "demo": "Demo"
   },
   "footer": {
-    "copyright": "© 2024 김개발. All rights reserved."
+    "copyright": "© 2025 프론트엔드 개발자. All rights reserved."
   }
 }

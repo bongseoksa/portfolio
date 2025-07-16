@@ -1,4 +1,8 @@
 {
+  "about": {
+    "about": "FE dev",
+    "name": "Sa BongSeok"
+  },
   "nav": {
     "about": "About",
     "skills": "Skills",
@@ -8,7 +12,6 @@
   "hero": {
     "greeting": "Hello,",
     "title": "Frontend Developer",
-    "name": "Kim Developer",
     "subtitle": "",
     "description": "A passionate frontend developer focused on creating user-centered web experiences. I primarily work with React, TypeScript, and Next.js, pursuing clean and efficient code.",
     "viewProjects": "View Projects",
@@ -32,6 +35,6 @@
     "demo": "Demo"
   },
   "footer": {
-    "copyright": "© 2024 Kim Developer. All rights reserved."
+    "copyright": "© 2025 frontend developer. All rights reserved."
   }
 }

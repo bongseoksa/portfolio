@@ -28,9 +28,7 @@ const Header: React.FC = () => {
             onClick={() => scrollToSection('about')}
             className="mr-6 flex items-center space-x-2 bg-transparent border-none cursor-pointer"
           >
-            <span className="font-bold text-xl">
-              {i18n.language === 'ko' ? '김개발' : 'Kim Dev'}
-            </span>
+            <span className="font-bold text-xl">{t('about.about')}</span>
           </button>
         </div>
         <nav className="flex items-center space-x-6 text-sm font-medium">
