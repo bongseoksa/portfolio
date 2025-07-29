@@ -4,6 +4,7 @@ import type React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { Calendar, MapPin } from 'lucide-react'
+import UsePresenceData from './HeroAbout'
 
 const HeroSection: React.FC = () => {
   const { t } = useTranslation()
@@ -20,6 +21,7 @@ const HeroSection: React.FC = () => {
       <div className="container px-4 md:px-6">
         <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_500px]">
           {/* TODO:: motionFramer로 오토 스위칭 처리 */}
+          {UsePresenceData()}
           <div className="flex flex-col justify-center space-y-4">
             <div className="space-y-2">
               <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
@@ -34,6 +36,7 @@ const HeroSection: React.FC = () => {
                 {t('hero.description')}
               </p>
             </div>
+
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
               <Button size="lg" onClick={() => scrollToSection('projects')}>
                 {t('hero.viewProjects')}

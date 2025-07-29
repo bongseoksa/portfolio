@@ -4,6 +4,29 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+
+  --white: #fff;
+  --white-feint: #898d8e;
+  --black: #0b1012;
+  --black-2: #111517;
+  --yellow: #fff312;
+  --blue: #83e6f7;
+  --green: #8df0cc;
+  --hue-0: var(--yellow);
+  --hue-1: #ff0088;
+  --hue-2: #dd00ee;
+  --hue-3: #9911ff;
+  --hue-4: #1e75f7;
+  --hue-5: #0cdcf7;
+  --hue-6: var(--green);
+
+  --hue-0-transparent: #fff31244;
+  --hue-1-transparent: #ff008844;
+  --hue-2-transparent: #dd00ee44;
+  --hue-3-transparent: #9911ff44;
+  --hue-4-transparent: #8ac0ff44;
+  --hue-5-transparent: #0cdcf744;
+  --hue-6-transparent: #8df0cc44;
 }
 
 @layer utilities {
