@@ -1,61 +1,54 @@
-'use client'
+'use client';
 
-import { AnimatePresence, motion, usePresenceData, wrap } from 'motion/react'
-import { forwardRef, SVGProps, useState } from 'react'
+import { AnimatePresence, motion, wrap } from 'motion/react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function UsePresenceData() {
-  const items = [1, 2, 3, 4, 5, 6]
-  const [selectedItem, setSelectedItem] = useState(items[0])
-  const [direction, setDirection] = useState<1 | -1>(1)
+  const { t } = useTranslation();
+  const abouts = t('hero.about', { returnObjects: true }) as unknown[];
+  const items = Array.isArray(abouts) ? abouts.map((_, i) => i) : [0];
+  const [selectedItem, setSelectedItem] = useState(items[0]);
+  const selectedItemRef = useRef(selectedItem);
+
+  // selectedItem이 변경될 때마다 ref 업데이트
+  useEffect(() => {
+    selectedItemRef.current = selectedItem;
+  }, [selectedItem]);
+
+  useEffect(() => {
+    const slideInterval = setInterval(() => setSlide(1), 6000);
+    return () => clearInterval(slideInterval);
+  }, []);
 
   function setSlide(newDirection: 1 | -1) {
-    const nextItem = wrap(1, items.length, selectedItem + newDirection)
-    setSelectedItem(nextItem)
-    setDirection(newDirection)
+    const nextItem = wrap(0, items.length, selectedItemRef.current + newDirection);
+    setSelectedItem(nextItem);
   }
 
-  const color = `var(--hue-${selectedItem})`
-
   return (
-    <div style={container}>
-      <motion.button
-        initial={false}
-        animate={{ backgroundColor: color }}
-        aria-label="Previous"
-        style={button}
-        onClick={() => setSlide(-1)}
-        whileFocus={{ outline: `2px solid ${color}` }}
-        whileTap={{ scale: 0.9 }}
-      >
-        <ArrowLeft />
-      </motion.button>
-      <AnimatePresence custom={direction} initial={false} mode="popLayout">
-        <Slide key={selectedItem} color={color} />
+    <div>
+      <AnimatePresence initial={false} mode="popLayout">
+        <motion.h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+          <span className="whitespace-pre-line">{t('hero.title')}</span>
+        </motion.h1>
+        <Slide key={selectedItem} selectedItem={selectedItem} />
       </AnimatePresence>
-      <motion.button
-        initial={false}
-        animate={{ backgroundColor: color }}
-        aria-label="Next"
-        style={button}
-        onClick={() => setSlide(1)}
-        whileFocus={{ outline: `2px solid ${color}` }}
-        whileTap={{ scale: 0.9 }}
-      >
-        <ArrowRight />
-      </motion.button>
     </div>
-  )
+  );
 }
 
 const Slide = forwardRef(function Slide(
-  { color }: { color: string },
+  { selectedItem }: { selectedItem: number },
   ref: React.Ref<HTMLDivElement>
 ) {
-  const direction = usePresenceData()
+  const { t } = useTranslation();
+  const abouts = t('hero.about', { returnObjects: true });
   return (
     <motion.div
+      className="space-y-2 h-36 sm:h-40 xl:h-44"
       ref={ref}
-      initial={{ opacity: 0, x: direction * 50 }}
+      initial={{ opacity: 0, x: 50 }}
       animate={{
         opacity: 1,
         x: 0,
@@ -66,73 +59,18 @@ const Slide = forwardRef(function Slide(
           bounce: 0.4
         }
       }}
-      exit={{ opacity: 0, x: direction * -50 }}
-      style={{ ...box, backgroundColor: color }}
-    />
-  )
-})
-
-/**
- * ==============   Icons   ================
- */
-const iconsProps: SVGProps<SVGSVGElement> = {
-  xmlns: 'http://www.w3.org/2000/svg',
-  width: '24',
-  height: '24',
-  viewBox: '0 0 24 24',
-  fill: 'none',
-  stroke: 'currentColor',
-  strokeWidth: '2',
-  strokeLinecap: 'round',
-  strokeLinejoin: 'round'
-}
-
-function ArrowLeft() {
-  return (
-    <svg {...iconsProps}>
-      <path d="m12 19-7-7 7-7" />
-      <path d="M19 12H5" />
-    </svg>
-  )
-}
-
-function ArrowRight() {
-  return (
-    <svg {...iconsProps}>
-      <path d="M5 12h14" />
-      <path d="m12 5 7 7-7 7" />
-    </svg>
-  )
-}
-
-/**
- * ==============   Styles   ================
- */
-
-const container: React.CSSProperties = {
-  display: 'flex',
-  position: 'relative',
-  justifyContent: 'center',
-  alignItems: 'center',
-  gap: 10
-}
-
-const box: React.CSSProperties = {
-  width: 150,
-  height: 150,
-  backgroundColor: '#0cdcf7',
-  borderRadius: '10px'
-}
-
-const button: React.CSSProperties = {
-  backgroundColor: '#0cdcf7',
-  width: 40,
-  height: 40,
-  borderRadius: '50%',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  position: 'relative',
-  zIndex: 1,
-  outlineOffset: 2
-}
+      exit={{ opacity: 0, x: -50 }}
+    >
+      {Array.isArray(abouts) && abouts.length > selectedItem && abouts[selectedItem] ? (
+        <>
+          <h2 className="text-xl font-bold tracking-tighter sm:text-3xl xl:text-4xl/none">
+            <span className="whitespace-pre-line">{abouts[selectedItem].subtitle}</span>
+          </h2>
+          <p className="max-w-[600px] text-muted-foreground md:text-xl">
+            {abouts[selectedItem].description}
+          </p>
+        </>
+      ) : null}
+    </motion.div>
+  );
+});

@@ -10,10 +10,21 @@
     "projects": "Projects"
   },
   "hero": {
-    "greeting": "Hello,",
-    "title": "Frontend Developer",
-    "subtitle": "",
-    "description": "A passionate frontend developer focused on creating user-centered web experiences. I primarily work with React, TypeScript, and Next.js, pursuing clean and efficient code.",
+    "title": "Hello,\nI'm Frontend Developer Bongseok Sa.",
+    "about": [
+      {
+        "subtitle": "I pursue frontend development with scalability and stability in mind.",
+        "description": "I value user-centered web experiences. I aim for collaborative, well-structured, and scalable code, and prioritize service stability and sustainable operations."
+      },
+      {
+        "subtitle": "I solve problems together with the team.",
+        "description": "I don't stop at implementing features. I actively engage in resolving conflicts and aligning goals during collaboration. Even in constrained environments, I focus on finding the best possible direction with the team."
+      },
+      {
+        "subtitle": "I enjoy new challenges.",
+        "description": "Based on experience across diverse projects, I continue to grow by taking on new technical challenges such as real-time communication services, 3D editing tools, and multi-platform web games."
+      }
+    ],
     "viewProjects": "View Projects",
     "contact": "Contact Me",
     "location": "Seoul, South Korea",

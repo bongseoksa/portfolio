@@ -1,41 +1,28 @@
-'use client'
+'use client';
 
-import type React from 'react'
-import { useTranslation } from 'react-i18next'
-import { Button } from '@/components/ui/button'
-import { Calendar, MapPin } from 'lucide-react'
-import UsePresenceData from './HeroAbout'
+import type React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Button } from '@/components/ui/button';
+import { Calendar, MapPin } from 'lucide-react';
+import UsePresenceData from './HeroAbout';
 
 const HeroSection: React.FC = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
+    const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+      element.scrollIntoView({ behavior: 'smooth' });
     }
-  }
+  };
 
   return (
     <section id="about" className="py-24 md:py-32">
       <div className="container px-4 md:px-6">
         <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_500px]">
           {/* TODO:: motionFramer로 오토 스위칭 처리 */}
-          {UsePresenceData()}
           <div className="flex flex-col justify-center space-y-4">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
-                {t('hero.greeting')}
-                <br />
-                {t('hero.title')}
-                <br />
-                <span className="text-primary">{t('about.name')}</span>
-                {t('hero.subtitle')}
-              </h1>
-              <p className="max-w-[600px] text-muted-foreground md:text-xl">
-                {t('hero.description')}
-              </p>
-            </div>
+            {UsePresenceData()}
 
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
               <Button size="lg" onClick={() => scrollToSection('projects')}>
@@ -70,7 +57,7 @@ const HeroSection: React.FC = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default HeroSection
+export default HeroSection;
