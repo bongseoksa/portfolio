@@ -10,8 +10,8 @@ export const skills: {
   frontend: ['React', 'Next.js', 'Vue.js (V2)', 'TypeScript', 'JavaScript'],
   stateManagement: ['Recoil', 'Zustand', 'vuex'],
   styling: ['tailwind CSS', 'styled-components'],
-  api: ['TanStack Query', 'Axios', 'WebRTC', 'Firebase(FCM)'],
-  tools: ['Figma', 'Zeplin', 'Bitbucket', 'git', 'FileZilla', 'Jira', 'Confluence', 'Slack']
+  api: ['Axios', 'TanStack Query', 'WebRTC', 'Firebase(FCM)'],
+  tools: ['Figma', 'Zeplin', 'git', 'Bitbucket', 'FileZilla', 'Jira', 'Slack', 'Confluence']
 };
 
 export const experiences: Experience[] = [
