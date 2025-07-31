@@ -1,24 +1,26 @@
-'use client'
+'use client';
 
-import type React from 'react'
-import { useTranslation } from 'react-i18next'
-import { Button } from '@/components/ui/button'
-import { Github, Linkedin, Mail, Globe } from 'lucide-react'
+import type React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Button } from '@/components/ui/button';
+import { Mail, Globe } from 'lucide-react';
+import SimpleIcon from './SimpleIcon';
+import { siGithub } from 'simple-icons';
 
 const Header: React.FC = () => {
-  const { t, i18n } = useTranslation()
+  const { t, i18n } = useTranslation();
 
   const toggleLanguage = () => {
-    const newLang = i18n.language === 'ko' ? 'en' : 'ko'
-    i18n.changeLanguage(newLang)
-  }
+    const newLang = i18n.language === 'ko' ? 'en' : 'ko';
+    i18n.changeLanguage(newLang);
+  };
 
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
+    const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+      element.scrollIntoView({ behavior: 'smooth' });
     }
-  }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -69,18 +71,13 @@ const Header: React.FC = () => {
           </Button>
           <Button variant="ghost" size="sm" asChild>
             <a href="https://github.com" target="_blank" rel="noopener noreferrer">
-              <Github className="h-4 w-4" />
-            </a>
-          </Button>
-          <Button variant="ghost" size="sm" asChild>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">
-              <Linkedin className="h-4 w-4" />
+              <SimpleIcon svgData={siGithub.svg} />
             </a>
           </Button>
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

@@ -7,13 +7,7 @@ import { ExternalLink } from 'lucide-react';
 import { siGithub } from 'simple-icons';
 import { projects } from '../data/portfolio';
 import type { Project } from '../types/portfolio';
-import SVG from 'react-inlinesvg';
-
-const SimpleIcon = (svgData: string) => {
-  const svgDataUri = `data:image/svg+xml;utf8,${encodeURIComponent(svgData)}`;
-
-  return <SVG src={svgDataUri} width={24} height={24} />;
-};
+import SimpleIcon from './SimpleIcon';
 
 const ProjectsSection: React.FC = () => {
   const { t } = useTranslation();
@@ -67,7 +61,7 @@ const ProjectsSection: React.FC = () => {
                   {project.github && (
                     <Button size="sm" variant="outline" asChild>
                       <a href={project.github} target="_blank" rel="noopener noreferrer">
-                        {SimpleIcon(siGithub.svg)}
+                        <SimpleIcon svgData={siGithub.svg} />
                         {t('projects.github')}
                       </a>
                     </Button>
