@@ -19,8 +19,8 @@ export interface Project {
   description: string;
   tech: string[];
   image: string;
-  github: string;
-  demo: string;
+  github?: string;
+  detail: string;
 }
 
 export interface SocialLink {

@@ -43,7 +43,7 @@
     "title": "프로젝트",
     "description": "다양한 프로젝트를 통해 쌓은 경험과 기술력을 확인해보세요.",
     "github": "GitHub",
-    "demo": "Demo"
+    "detail": "Detail"
   },
   "footer": {
     "copyright": "© 2025 프론트엔드 개발자. All rights reserved."

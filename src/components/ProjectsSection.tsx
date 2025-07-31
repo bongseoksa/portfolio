@@ -1,14 +1,22 @@
-import type React from 'react'
-import { useTranslation } from 'react-i18next'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { Github, ExternalLink } from 'lucide-react'
-import { projects } from '../data/portfolio'
-import type { Project } from '../types/portfolio'
+import type React from 'react';
+import { useTranslation } from 'react-i18next';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ExternalLink } from 'lucide-react';
+import { siGithub } from 'simple-icons';
+import { projects } from '../data/portfolio';
+import type { Project } from '../types/portfolio';
+import SVG from 'react-inlinesvg';
+
+const SimpleIcon = (svgData: string) => {
+  const svgDataUri = `data:image/svg+xml;utf8,${encodeURIComponent(svgData)}`;
+
+  return <SVG src={svgDataUri} width={24} height={24} />;
+};
 
 const ProjectsSection: React.FC = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   return (
     <section id="projects" className="py-24 bg-muted/50">
@@ -48,18 +56,22 @@ const ProjectsSection: React.FC = () => {
                   ))}
                 </div>
                 <div className="flex gap-2">
-                  <Button size="sm" variant="outline" asChild>
-                    <a href={project.github} target="_blank" rel="noopener noreferrer">
-                      <Github className="h-4 w-4 mr-2" />
-                      {t('projects.github')}
-                    </a>
-                  </Button>
-                  <Button size="sm" asChild>
-                    <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      {t('projects.demo')}
-                    </a>
-                  </Button>
+                  {project.detail && (
+                    <Button size="sm" asChild>
+                      <a href={project.detail} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink className="h-4 w-4 mr-2" />
+                        {t('projects.detail')}
+                      </a>
+                    </Button>
+                  )}
+                  {project.github && (
+                    <Button size="sm" variant="outline" asChild>
+                      <a href={project.github} target="_blank" rel="noopener noreferrer">
+                        {SimpleIcon(siGithub.svg)}
+                        {t('projects.github')}
+                      </a>
+                    </Button>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -67,7 +79,7 @@ const ProjectsSection: React.FC = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default ProjectsSection
+export default ProjectsSection;

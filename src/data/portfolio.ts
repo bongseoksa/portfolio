@@ -119,35 +119,39 @@ export const experiences: Experience[] = [
 
 export const projects: Project[] = [
   {
-    title: 'E-커머스 플랫폼',
-    description: 'React와 Next.js를 활용한 현대적인 온라인 쇼핑몰 플랫폼',
-    tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Stripe', 'PostgreSQL'],
-    image: '/placeholder.svg?height=200&width=300',
-    github: '#',
-    demo: '#'
+    title: '와이더스',
+    description: 'Next.js와 Babylon.js를 활용한 현실공간 기반 디지털트윈 공간맵 저작/공유 서비스',
+    tech: ['Next.js', 'TypeScript', 'Tailwind CSS', 'styled-components', 'Babylon.js'],
+    image: '/widearth.png?height=200&width=300',
+    github: '',
+    detail:
+      'https://lush-sturgeon-c94.notion.site/Widearth-1d2141f8c327807cbe97da5ebd218c02?source=copy_link'
   },
   {
-    title: '태스크 관리 앱',
-    description: '팀 협업을 위한 실시간 태스크 관리 및 프로젝트 추적 도구',
-    tech: ['React', 'Node.js', 'Socket.io', 'MongoDB', 'Material-UI'],
-    image: '/placeholder.svg?height=200&width=300',
-    github: '#',
-    demo: '#'
+    title: '맥스워크 어플라이언스 (미상용)',
+    description: '디지털트윈과 IoT를 통한 실시간 공간 관리 서비스',
+    tech: ['Next.js', 'TypeScript', 'styled-components', 'RabbitMQ'],
+    image: '/appliance.png?height=200&width=300',
+    github: '',
+    detail:
+      'https://lush-sturgeon-c94.notion.site/Maxwork-Appliance-1d2141f8c32780e2b6a7cb31ef062003?source=copy_link'
   },
   {
-    title: '날씨 대시보드',
-    description: 'OpenWeather API를 활용한 반응형 날씨 정보 대시보드',
-    tech: ['Vue.js', 'Chart.js', 'CSS3', 'REST API'],
-    image: '/placeholder.svg?height=200&width=300',
-    github: '#',
-    demo: '#'
+    title: '맥스워크 / MSF',
+    description: 'AR기반 산업용 스마트 팩토리, 원격지원 솔루션 서비스',
+    tech: ['Vue.js', 'Next.js', 'WebRTC', 'Javascript', 'TypeScript', 'styled-components'],
+    image: '/maxwork.png?height=200&width=300',
+    github: '',
+    detail:
+      'https://lush-sturgeon-c94.notion.site/MSF-1d2141f8c32780288c22f55dae0f1eb6?source=copy_link'
   },
   {
-    title: '포트폴리오 웹사이트',
-    description: '개인 브랜딩을 위한 반응형 포트폴리오 웹사이트',
-    tech: ['React', 'TypeScript', 'Tailwind CSS', 'i18next'],
+    title: '파견 & 외주',
+    description: 'AR기반 산업용 스마트 팩토리, 원격지원 솔루션(맥스워크) 엔터프라이즈 파견 및 외주',
+    tech: ['Vue.js', 'Next.js', 'WebRTC', 'Javascript', 'TypeScript', 'styled-components'],
     image: '/placeholder.svg?height=200&width=300',
-    github: '#',
-    demo: '#'
+    github: '',
+    detail:
+      'https://lush-sturgeon-c94.notion.site/1d2141f8c32780e98ae8f70b7ebb77a2?source=copy_link'
   }
 ];
