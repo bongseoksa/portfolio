@@ -48,6 +48,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Restore node modules from cache
         id: restore-node-modules
         uses: actions/cache@v3
@@ -72,6 +75,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
 
       - name: Restore node modules from cache
         id: restore-node-modules
