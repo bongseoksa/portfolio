@@ -2,9 +2,9 @@ name: CI actions
 
 on:
   push:
-    branches: ['master', 'ci-cd']
+    branches: ['master']
   pull_request:
-    branches: ['master', 'ci-cd']
+    branches: ['master']
 
 jobs:
   # 의존성 설치
