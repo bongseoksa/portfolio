@@ -19,8 +19,11 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Restore node modules from cache
-        id: resotre-node-modules
+        id: restore-node-modules
         uses: actions/cache@v3
         with:
           path: node_modules
@@ -28,7 +31,7 @@ jobs:
           restore-keys: ${{runner.os}}-node
 
       - name: Install dependencies
-        if: steps.resotre-node-modules.outputs.cache-hit != 'true'
+        if: steps.restore-node-modules.outputs.cache-hit != 'true'
         run: pnpm install
         working-directory: ./
 
@@ -46,7 +49,7 @@ jobs:
           node-version: '20'
 
       - name: Restore node modules from cache
-        id: resotre-node-modules
+        id: restore-node-modules
         uses: actions/cache@v3
         with:
           path: node_modules
@@ -54,8 +57,7 @@ jobs:
           restore-keys: ${{runner.os}}-node
 
       - name: Run Lint
-        if: steps.resotre-node-modules.outputs.cache-hit != 'true'
-        run: npm run lint
+        run: pnpm run lint
         working-directory: ./
 
   # Build
@@ -72,10 +74,10 @@ jobs:
           node-version: '20'
 
       - name: Restore node modules from cache
-        id: resotre-node-modules
+        id: restore-node-modules
         uses: actions/cache@v3
         with:
-          path: week-3/node_modules
+          path: node_modules
           key: ${{runner.os}}-node-${{hashFiles('pnpm-lock.yaml')}}
           restore-keys: ${{runner.os}}-node
 
