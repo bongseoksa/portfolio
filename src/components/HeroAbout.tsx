@@ -1,7 +1,7 @@
 'use client';
 
 import { AnimatePresence, motion, wrap } from 'motion/react';
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function UsePresenceData() {
@@ -11,6 +11,14 @@ export default function UsePresenceData() {
   const [selectedItem, setSelectedItem] = useState(items[0]);
   const selectedItemRef = useRef(selectedItem);
 
+  const setSlide = useCallback(
+    (newDirection: 1 | -1) => {
+      const nextItem = wrap(0, items.length, selectedItemRef.current + newDirection);
+      setSelectedItem(nextItem);
+    },
+    [items.length]
+  );
+
   // selectedItem이 변경될 때마다 ref 업데이트
   useEffect(() => {
     selectedItemRef.current = selectedItem;
@@ -19,12 +27,7 @@ export default function UsePresenceData() {
   useEffect(() => {
     const slideInterval = setInterval(() => setSlide(1), 6000);
     return () => clearInterval(slideInterval);
-  }, []);
-
-  function setSlide(newDirection: 1 | -1) {
-    const nextItem = wrap(0, items.length, selectedItemRef.current + newDirection);
-    setSelectedItem(nextItem);
-  }
+  }, [setSlide]);
 
   return (
     <div>
