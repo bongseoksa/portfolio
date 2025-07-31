@@ -1,60 +1,90 @@
-import type React from "react"
-import { useTranslation } from "react-i18next"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { MapPin } from "lucide-react"
-import { experiences } from "../data/portfolio"
-import type { Experience } from "../types/portfolio"
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { experiences } from '../data/portfolio';
+import type { Achievement } from '../types/portfolio';
 
 const CareerSection: React.FC = () => {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
+
+  // 텍스트에서 링크를 적용하는 함수
+  const renderTextWithLinks = (text: string, links: Record<string, string>) => {
+    if (Object.keys(links).length === 0) {
+      return text;
+    }
+
+    // 모든 링크 키워드를 정규식으로 찾아서 한 번에 처리
+    const linkKeywords = Object.keys(links);
+    const regex = new RegExp(`(${linkKeywords.join('|')})`, 'g');
+
+    const parts: (string | React.JSX.Element)[] = [];
+    let lastIndex = 0;
+    let match;
+
+    while ((match = regex.exec(text)) !== null) {
+      const keyword = match[0];
+      const url = links[keyword];
+
+      // 매치 이전 텍스트 추가
+      if (match.index > lastIndex) {
+        parts.push(text.slice(lastIndex, match.index));
+      }
+
+      // 링크 추가
+      parts.push(
+        <a
+          key={`${keyword}-${match.index}`}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:text-blue-800 underline"
+        >
+          {keyword}
+        </a>
+      );
+
+      lastIndex = match.index + keyword.length;
+    }
+
+    // 마지막 매치 이후 텍스트 추가
+    if (lastIndex < text.length) {
+      parts.push(text.slice(lastIndex));
+    }
+
+    return parts.length > 0 ? parts : text;
+  };
 
   return (
-    <section id="career" className="py-24">
-      <div className="container px-4 md:px-6">
-        <div className="flex flex-col items-center justify-center space-y-4 text-center">
-          <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">{t("career.title")}</h2>
-            <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              {t("career.description")}
-            </p>
-          </div>
-        </div>
-        <div className="mx-auto grid max-w-5xl gap-6 py-12">
-          {experiences.map((exp: Experience, index: number) => (
-            <Card key={index}>
-              <CardHeader>
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                  <div>
-                    <CardTitle className="text-xl">{exp.position}</CardTitle>
-                    <CardDescription className="text-lg font-medium text-foreground">{exp.company}</CardDescription>
-                  </div>
-                  <div className="flex flex-col sm:items-end gap-1">
-                    <Badge variant="outline">{exp.period}</Badge>
-                    <div className="flex items-center text-sm text-muted-foreground">
-                      <MapPin className="h-3 w-3 mr-1" />
-                      {exp.location}
-                    </div>
-                  </div>
+    <section id="career" className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-bold text-center mb-12">{t('career.title')}</h2>
+        <div className="space-y-8">
+          {experiences.map((exp, index) => (
+            <div key={index} className="bg-white rounded-lg shadow-md p-6">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900">{exp.company}</h3>
+                  <p className="text-lg text-gray-700">{exp.position}</p>
                 </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground mb-4">{exp.description}</p>
-                <div className="space-y-2">
-                  <h4 className="font-medium">{t("career.achievements")}</h4>
-                  <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-                    {exp.achievements.map((achievement: string, i: number) => (
-                      <li key={i}>{achievement}</li>
-                    ))}
-                  </ul>
+                <div className="text-sm text-gray-500 mt-2 md:mt-0">
+                  <p>{exp.period}</p>
+                  <p>{exp.location}</p>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+              <p className="text-gray-600 mb-4 whitespace-pre-line">{exp.description}</p>
+              <div>
+                <h4 className="font-medium">{t('career.achievements')}</h4>
+                <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
+                  {exp.achievements.map((achievement: Achievement, i: number) => (
+                    <li key={i}>{renderTextWithLinks(achievement.text, achievement.links)}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           ))}
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default CareerSection
+export default CareerSection;
