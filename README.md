@@ -2,6 +2,8 @@
 
 ## 환경 세팅
 
+※ github actions의 cd.yml이 완료되는 경우 vercel 배포 진행. vercel project에서 github 연동하지 않음.
+
 ```
   Package Manager: pnpm
   node version: v20
