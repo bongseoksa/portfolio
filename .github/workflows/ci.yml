@@ -1,4 +1,4 @@
-name: CI actions
+name: CI Workflow
 
 on:
   push:
