@@ -2,8 +2,8 @@ name: Vercel Production Deployment
 
 # 환경변수 세팅
 env:
-  VERCEL_ORG_ID: ${{secrets.VERCEL_ORG_ID}}
-  VERCEL_PROJECT_ID: ${{secrets.VERCEL_PRJ_ID}}
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PRJ_ID }}
 
 on:
   push:
@@ -20,13 +20,25 @@ jobs:
         run: npm install -g pnpm
 
       - name: Install Vercel CLI
-        run: pnpm setup && pnpm add -g vercel@canary
+        run: |
+          export PNPM_HOME="/home/runner/.local/share/pnpm"
+          export PATH="$PNPM_HOME:$PATH"
+          pnpm add -g vercel@canary
 
       - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=production --token=${{secrets.VERCEL_TOKEN}}
+        run: |
+          export PNPM_HOME="/home/runner/.local/share/pnpm"
+          export PATH="$PNPM_HOME:$PATH"
+          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build Project Artifacts
-        run: vercel build --prod --token=${{secrets.VERCEL_TOKEN}}
+        run: |
+          export PNPM_HOME="/home/runner/.local/share/pnpm"
+          export PATH="$PNPM_HOME:$PATH"
+          vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --prod --token=${{secrets.VERCEL_TOKEN}}
+        run: |
+          export PNPM_HOME="/home/runner/.local/share/pnpm"
+          export PATH="$PNPM_HOME:$PATH"
+          vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
