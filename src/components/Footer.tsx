@@ -17,13 +17,13 @@ const Footer: React.FC = () => {
         </div>
         <div className="flex items-center space-x-4">
           <a
-            href="mailto:contact@example.com"
+            href="mailto:qhdtjr1004@naver.com"
             className="text-muted-foreground hover:text-foreground"
           >
             <Mail className="h-5 w-5" />
           </a>
           <a
-            href="https://github.com"
+            href="https://github.com/bongseoksa"
             target="_blank"
             rel="noopener noreferrer"
             className="text-muted-foreground hover:text-foreground"

@@ -65,12 +65,12 @@ const Header: React.FC = () => {
             {i18n.language === 'ko' ? 'EN' : '한국어'}
           </Button>
           <Button variant="ghost" size="sm" asChild>
-            <a href="mailto:contact@example.com">
+            <a href="mailto:qhdtjr1004@naver.com">
               <Mail className="h-4 w-4" />
             </a>
           </Button>
           <Button variant="ghost" size="sm" asChild>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/bongseoksa" target="_blank" rel="noopener noreferrer">
               <SimpleIcon svgData={siGithub.svg} />
             </a>
           </Button>

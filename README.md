@@ -2,7 +2,7 @@
 
 ## 사이트 주소
 
-(https://portfolio-wheat-eight-88.vercel.app/)[https://portfolio-wheat-eight-88.vercel.app/]
+[https://portfolio-wheat-eight-88.vercel.app/](https://portfolio-wheat-eight-88.vercel.app/)
 
 ## 환경 세팅
 
