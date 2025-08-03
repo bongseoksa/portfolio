@@ -153,5 +153,14 @@ export const projects: Project[] = [
     github: '',
     detail:
       'https://lush-sturgeon-c94.notion.site/1d2141f8c32780e98ae8f70b7ebb77a2?source=copy_link'
+  },
+  {
+    title: '포트폴리오',
+    description: 'Open AI를 활용한 포트폴리오',
+    tech: ['v0.dev', 'claude-4-sonnet', 'react', 'typescript', 'tailwindcss'],
+    image: '/portfolio.gif?height=200&width=300',
+    github: 'https://github.com/bongseoksa/portfolio.git',
+    detail:
+      'https://lush-sturgeon-c94.notion.site/241141f8c32780699207d6c9fa10f03d?source=copy_link'
   }
 ];

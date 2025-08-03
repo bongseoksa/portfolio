@@ -7,6 +7,7 @@
 ```
   Package Manager: pnpm
   node version: v20
+  bundler: vite
   deployment: vercel, github actions
 ```
 
