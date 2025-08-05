@@ -31,8 +31,8 @@ const getVitals = async () => {
     // ✅ 로컬 환경 → Supabase 직접 조회
     const { data, error } = await supabase
       .from('web_vitals')
-      .select('name, value, rating, inserted_at')
-      .order('inserted_at', { ascending: false });
+      .select('name, value, rating, created_at')
+      .order('created_at', { ascending: false });
 
     if (error) {
       console.error('[Supabase select error]', error);
