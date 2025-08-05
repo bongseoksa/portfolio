@@ -7,7 +7,8 @@
     "about": "소개",
     "skills": "기술스택",
     "career": "커리어",
-    "projects": "프로젝트"
+    "projects": "프로젝트",
+    "performance": "성능 통계"
   },
   "hero": {
     "title": "안녕하세요,\n프론트엔드 개발자 사봉석입니다.",
