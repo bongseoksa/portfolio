@@ -1,9 +1,9 @@
 import { supabase } from '@/lib/superbaseClient';
-import { onCLS, onFCP, onLCP, onTTFB, onINP } from 'web-vitals';
+import { onCLS, onFCP, onLCP, onTTFB, onINP, Metric } from 'web-vitals';
 
 const isLocal = import.meta.env.VITE_ENV === 'local';
 
-const sendToServer = async (metric: any) => {
+const sendToServer = async (metric: Metric) => {
   if (isLocal) {
     const { error } = await supabase.from('web_vitals').insert([
       {
