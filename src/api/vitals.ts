@@ -1,6 +1,23 @@
-import { onCLS, onFCP, onLCP, onTTFB, onINP, Metric } from 'web-vitals';
+import { supabase } from '@/lib/superbaseClient';
+import { onCLS, onFCP, onLCP, onTTFB, onINP } from 'web-vitals';
 
-const sendToVercel = (metric: Metric) => {
+const isLocal = import.meta.env.VITE_ENV === 'local';
+
+const sendToServer = async (metric: any) => {
+  if (isLocal) {
+    const { error } = await supabase.from('web_vitals').insert([
+      {
+        name: metric.name,
+        value: metric.value,
+        delta: metric.delta,
+        rating: metric.rating,
+        navigation_type: metric.navigationType
+      }
+    ]);
+    if (error) console.error('[Supabase insert error]', error);
+    return;
+  }
+
   fetch('/api/vitals', {
     method: 'POST',
     body: JSON.stringify(metric),
@@ -9,11 +26,11 @@ const sendToVercel = (metric: Metric) => {
 };
 
 const postVitals = () => {
-  onCLS(sendToVercel);
-  onFCP(sendToVercel);
-  onLCP(sendToVercel);
-  onTTFB(sendToVercel);
-  onINP?.(sendToVercel);
+  onCLS(sendToServer);
+  onFCP(sendToServer);
+  onLCP(sendToServer);
+  onTTFB(sendToServer);
+  onINP?.(sendToServer);
 };
 
 export { postVitals };
