@@ -91,7 +91,16 @@ export default function LineChart({ data, metric }: LineChartProps) {
     // Add axes
     g.append('g')
       .attr('transform', `translate(0,${height})`)
-      .call(d3.axisBottom(xScale).tickFormat(d3.timeFormat('%H:%M')));
+      .call(
+        d3.axisBottom(xScale).tickFormat((domainValue: Date | d3.NumberValue, index: number) => {
+          // domainValue가 Date 타입이면 포맷 적용, 아니면 빈 문자열 반환
+          if (domainValue instanceof Date) {
+            return d3.timeFormat('%H:%M')(domainValue);
+          }
+          // d3.scaleTime이 아닌 경우에도 대비
+          return '';
+        })
+      );
 
     const yAxis =
       metric === 'CLS'

@@ -36,7 +36,9 @@ export default function GaugeChart({ value, label, max }: GaugeChartProps) {
       .startAngle(-Math.PI / 2)
       .endAngle(Math.PI / 2);
 
-    g.append('path').attr('d', backgroundArc).attr('fill', '#e5e7eb');
+    g.append('path')
+      .attr('d', backgroundArc({} as d3.DefaultArcObject))
+      .attr('fill', '#e5e7eb');
 
     // Value arc
     const valueArc = d3
@@ -49,7 +51,9 @@ export default function GaugeChart({ value, label, max }: GaugeChartProps) {
     // Color based on performance score
     const color = value >= 80 ? '#10b981' : value >= 50 ? '#f59e0b' : '#ef4444';
 
-    g.append('path').attr('d', valueArc).attr('fill', color);
+    g.append('path')
+      .attr('d', valueArc({} as d3.DefaultArcObject))
+      .attr('fill', color);
 
     // Center text
     g.append('text')
