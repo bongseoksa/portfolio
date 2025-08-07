@@ -70,10 +70,10 @@ export default function DonutChart({ data }: DonutChartProps) {
       .attr('d', arc)
       .attr('fill', (d) => d.data.color)
       .attr('opacity', 0.8)
-      .on('mouseover', function (event, d) {
+      .on('mouseover', function () {
         d3.select(this).attr('opacity', 1);
       })
-      .on('mouseout', function (event, d) {
+      .on('mouseout', function () {
         d3.select(this).attr('opacity', 0.8);
       });
 

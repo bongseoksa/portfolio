@@ -111,10 +111,10 @@ export default function BarChart({ data, metric = 'LCP' }: BarChartProps) {
         return getRatingColor(rating);
       })
       .attr('opacity', 0.7)
-      .on('mouseover', function (event, d) {
+      .on('mouseover', function () {
         d3.select(this).attr('opacity', 1);
       })
-      .on('mouseout', function (event, d) {
+      .on('mouseout', function () {
         d3.select(this).attr('opacity', 0.7);
       });
 
