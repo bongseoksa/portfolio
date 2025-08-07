@@ -15,14 +15,13 @@ const sendToServer = async (metric: Metric) => {
       }
     ]);
     if (error) console.error('[Supabase insert error]', error);
-    return;
+  } else {
+    fetch('/api/vitals', {
+      method: 'POST',
+      body: JSON.stringify(metric),
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
-
-  fetch('/api/vitals', {
-    method: 'POST',
-    body: JSON.stringify(metric),
-    headers: { 'Content-Type': 'application/json' }
-  });
 };
 
 /** 성능지표 데이터 조회 */
@@ -40,16 +39,16 @@ const getVitals = async () => {
     }
 
     return data;
-  }
-
-  // ✅ 서버리스 환경 → API 경유 조회
-  try {
-    const response = await fetch('/api/vitals-data');
-    if (!response.ok) throw new Error('API fetch failed');
-    return await response.json();
-  } catch (err) {
-    console.error('[API fetch error]', err);
-    return [];
+  } else {
+    // ✅ 서버리스 환경 → API 경유 조회
+    try {
+      const response = await fetch('/api/vitals');
+      if (!response.ok) throw new Error('API fetch failed');
+      return await response.json();
+    } catch (err) {
+      console.error('[API fetch error]', err);
+      return [];
+    }
   }
 };
 
