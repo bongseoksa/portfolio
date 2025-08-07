@@ -8,8 +8,8 @@ const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SE
 const handleGet = async (req: VercelRequest, res: VercelResponse) => {
   const { data, error } = await supabase
     .from('web_vitals')
-    .select('name, value, rating, inserted_at')
-    .order('inserted_at', { ascending: false });
+    .select('name, value, rating, created_at')
+    .order('created_at', { ascending: false });
 
   if (error) {
     console.error('[Supabase select error]', error);
