@@ -21,7 +21,9 @@ const handleGet = async (req: VercelRequest, res: VercelResponse) => {
 
 /** 데이터 추가 */
 const handlePost = async (req: VercelRequest, res: VercelResponse) => {
-  const { name, value, delta, rating, navigationType } = req.body;
+  // body가 파싱되어 있지 않으면 직접 파싱
+  const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+  const { name, value, delta, rating, navigationType } = body;
 
   const { error } = await supabase.from('web_vitals').insert([
     {
@@ -42,8 +44,8 @@ const handlePost = async (req: VercelRequest, res: VercelResponse) => {
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method === 'POST') handlePost(req, res);
-  else if (req.method === 'GET') handleGet(req, res);
+  if (req.method === 'POST') return await handlePost(req, res);
+  else if (req.method === 'GET') return await handleGet(req, res);
   else {
     return res.status(405).end();
   }
