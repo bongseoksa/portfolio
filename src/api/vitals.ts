@@ -42,7 +42,7 @@ const getVitals = async () => {
   } else {
     // ✅ 서버리스 환경 → API 경유 조회
     try {
-      const response = await fetch('/api/vitals-data');
+      const response = await fetch('/api/vitals');
       if (!response.ok) throw new Error('API fetch failed');
       return await response.json();
     } catch (err) {
