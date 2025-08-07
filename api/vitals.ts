@@ -21,26 +21,34 @@ const handleGet = async (req: VercelRequest, res: VercelResponse) => {
 
 /** 데이터 추가 */
 const handlePost = async (req: VercelRequest, res: VercelResponse) => {
-  // body가 파싱되어 있지 않으면 직접 파싱
-  const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
-  const { name, value, delta, rating, navigationType } = body;
+  try {
+    // body가 파싱되어 있지 않으면 직접 파싱
+    console.log('raw req.body:', req.body);
+    const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
+    console.log('parsed body:', body);
 
-  const { error } = await supabase.from('web_vitals').insert([
-    {
-      name,
-      value,
-      delta,
-      rating,
-      navigation_type: navigationType
+    const { name, value, delta, rating, navigationType } = body;
+
+    const { error } = await supabase.from('web_vitals').insert([
+      {
+        name,
+        value,
+        delta,
+        rating,
+        navigation_type: navigationType
+      }
+    ]);
+
+    if (error) {
+      console.error('Supabase insert error:', error);
+      return res.status(500).json({ success: false, error });
     }
-  ]);
 
-  if (error) {
-    console.error(error);
-    return res.status(500).json({ success: false });
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    console.error('Unexpected error:', err);
+    return res.status(500).json({ success: false, error: String(err) });
   }
-
-  return res.status(200).json({ success: true });
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
