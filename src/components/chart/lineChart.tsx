@@ -92,7 +92,7 @@ export default function LineChart({ data, metric }: LineChartProps) {
     g.append('g')
       .attr('transform', `translate(0,${height})`)
       .call(
-        d3.axisBottom(xScale).tickFormat((domainValue: Date | d3.NumberValue, index: number) => {
+        d3.axisBottom(xScale).tickFormat((domainValue: Date | d3.NumberValue) => {
           // domainValue가 Date 타입이면 포맷 적용, 아니면 빈 문자열 반환
           if (domainValue instanceof Date) {
             return d3.timeFormat('%H:%M')(domainValue);
