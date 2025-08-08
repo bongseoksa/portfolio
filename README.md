@@ -9,8 +9,8 @@
 ※ github actions의 cd.yml이 완료되는 경우 vercel 배포 진행. vercel project에서 github 연동하지 않음.
 
 ```
-  Package Manager: pnpm
-  node version: v20
+  Package Manager: pnpm@10.13.1
+  node version: v22.18.0
   bundler: vite
   deployment: vercel, github actions
 ```
