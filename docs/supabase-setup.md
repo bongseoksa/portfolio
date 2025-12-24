@@ -4,10 +4,6 @@ This document contains the SQL queries needed to set up the database schema for 
 
 ## Table Schema
 
-### `web_vitals` Table
-
-This table stores Core Web Vitals metrics collected from the live website.
-
 ### `ping` Table
 
 This table records health check pings to keep the Supabase project active and prevent free tier auto-pause.
