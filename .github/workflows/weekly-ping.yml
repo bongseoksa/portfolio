@@ -1,0 +1,39 @@
+name: Weekly Supabase Ping
+
+# 매주 일요일 24:00 KST (월요일 00:00 KST) 실행
+# KST는 UTC+9이므로 일요일 15:00 UTC = 월요일 00:00 KST
+on:
+  schedule:
+    - cron: '0 15 * * 0' # 매주 일요일 15:00 UTC
+  workflow_dispatch: # 수동 트리거 허용 (테스트용)
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ping Supabase via API
+        run: |
+          echo "Pinging Supabase at $(date)"
+
+          # API 호출 및 응답 캡처
+          response=$(curl -s -w "\n%{http_code}" https://portfolio-wheat-eight-88.vercel.app/api/ping)
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | head -n-1)
+
+          echo "HTTP Status: $http_code"
+          echo "Response: $body"
+
+          # HTTP 200 상태 코드 확인
+          if [ "$http_code" != "200" ]; then
+            echo "::error::Ping failed with status $http_code"
+            echo "::error::Response body: $body"
+            exit 1
+          fi
+
+          echo "::notice::Supabase ping successful"
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "::error::Weekly Supabase ping failed. Check logs above for details."

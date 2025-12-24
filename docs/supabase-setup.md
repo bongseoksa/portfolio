@@ -8,6 +8,48 @@ This document contains the SQL queries needed to set up the database schema for 
 
 This table stores Core Web Vitals metrics collected from the live website.
 
+### `ping` Table
+
+This table records health check pings to keep the Supabase project active and prevent free tier auto-pause.
+
+```sql
+-- Create ping table
+CREATE TABLE IF NOT EXISTS public.ping (
+  id BIGSERIAL PRIMARY KEY,
+  created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
+  status TEXT NOT NULL CHECK (status IN ('success', 'error')),
+  http_code INTEGER NOT NULL,
+  response_time_ms INTEGER,
+  error_message TEXT,
+  triggered_by TEXT DEFAULT 'github_actions' NOT NULL
+);
+
+-- Create index on created_at for faster sorting
+CREATE INDEX IF NOT EXISTS idx_ping_created_at
+  ON public.ping (created_at DESC);
+
+-- Create index on status for filtering
+CREATE INDEX IF NOT EXISTS idx_ping_status
+  ON public.ping (status);
+
+-- Enable Row Level Security
+ALTER TABLE public.ping ENABLE ROW LEVEL SECURITY;
+
+-- Policy: Allow service role to insert
+CREATE POLICY "Allow service role to insert"
+  ON public.ping
+  FOR INSERT
+  WITH CHECK (true);
+
+-- Policy: Allow service role to select
+CREATE POLICY "Allow service role to select"
+  ON public.ping
+  FOR SELECT
+  USING (true);
+```
+
+### `web_vitals` Table
+
 ```sql
 -- Create web_vitals table
 CREATE TABLE IF NOT EXISTS public.web_vitals (
@@ -215,3 +257,113 @@ VALUES ('LCP', 1234.5, 100.0, 'good', 'navigate');
 ```
 
 10. Verify the data appears in the dashboard at `/dashboard`
+
+## Ping Table Queries
+
+### Get Recent Pings
+
+```sql
+-- Get the most recent ping records
+SELECT
+  created_at,
+  status,
+  http_code,
+  response_time_ms,
+  triggered_by,
+  error_message
+FROM public.ping
+ORDER BY created_at DESC
+LIMIT 20;
+```
+
+### Check Ping Success Rate
+
+```sql
+-- Calculate ping success rate and average response time
+SELECT
+  status,
+  COUNT(*) as count,
+  ROUND(AVG(response_time_ms)::numeric, 2) as avg_response_ms,
+  ROUND((COUNT(*) * 100.0 / SUM(COUNT(*)) OVER ())::numeric, 2) as percentage
+FROM public.ping
+WHERE created_at > NOW() - INTERVAL '30 days'
+GROUP BY status;
+```
+
+### Check Ping Frequency
+
+```sql
+-- Verify pings are occurring weekly
+SELECT
+  DATE(created_at) as date,
+  COUNT(*) as ping_count,
+  STRING_AGG(DISTINCT triggered_by, ', ') as sources
+FROM public.ping
+WHERE created_at > NOW() - INTERVAL '60 days'
+GROUP BY DATE(created_at)
+ORDER BY date DESC;
+```
+
+### Monitor Response Time Trends
+
+```sql
+-- Track response time trends over time
+SELECT
+  DATE_TRUNC('week', created_at) as week,
+  AVG(response_time_ms) as avg_response_ms,
+  MIN(response_time_ms) as min_response_ms,
+  MAX(response_time_ms) as max_response_ms
+FROM public.ping
+WHERE status = 'success'
+  AND created_at > NOW() - INTERVAL '90 days'
+GROUP BY DATE_TRUNC('week', created_at)
+ORDER BY week DESC;
+```
+
+## Ping Table Field Descriptions
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `id` | BIGSERIAL | Auto-incrementing primary key |
+| `created_at` | TIMESTAMPTZ | Timestamp when ping was executed (UTC) |
+| `status` | TEXT | Ping result: 'success' or 'error' |
+| `http_code` | INTEGER | HTTP status code (200, 500, etc.) |
+| `response_time_ms` | INTEGER | Database response time in milliseconds |
+| `error_message` | TEXT | Error details if ping failed (NULL if successful) |
+| `triggered_by` | TEXT | Ping source: 'github_actions' or 'manual' |
+
+## GitHub Actions Weekly Ping
+
+The project includes a GitHub Actions workflow that automatically pings Supabase every Sunday at 24:00 KST (Monday 00:00 KST).
+
+**Workflow file:** `.github/workflows/weekly-ping.yml`
+
+**Schedule:** Every Sunday at 15:00 UTC (Monday 00:00 KST, as KST = UTC+9)
+
+**What it does:**
+1. Calls the `/api/ping` endpoint
+2. Checks for HTTP 200 response
+3. Records the result in the `ping` table
+4. Sends email notification if ping fails
+
+**Manual testing:**
+You can manually trigger the workflow from the GitHub Actions tab:
+1. Go to your repository on GitHub
+2. Click "Actions" tab
+3. Select "Weekly Supabase Ping" workflow
+4. Click "Run workflow" button
+
+**API endpoint:**
+You can also test the ping manually:
+```bash
+curl https://portfolio-wheat-eight-88.vercel.app/api/ping
+```
+
+Expected response:
+```json
+{
+  "success": true,
+  "message": "Ping successful",
+  "response_time_ms": 150
+}
+```
