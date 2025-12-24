@@ -65,9 +65,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // 에러 발생 시에도 테이블에 기록 시도
     const responseTime = Date.now() - startTime;
-    await supabase
-      .from('ping')
-      .insert([
+    try {
+      await supabase.from('ping').insert([
         {
           status: 'error',
           http_code: 500,
@@ -75,8 +74,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           error_message: String(err),
           triggered_by: 'github_actions'
         }
-      ])
-      .catch(console.error);
+      ]);
+    } catch (insertErr) {
+      console.error('[Failed to log error]', insertErr);
+    }
 
     return res.status(500).json({
       success: false,
