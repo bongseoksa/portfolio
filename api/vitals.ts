@@ -2,10 +2,29 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
 
-const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+  console.error('Missing Supabase environment variables');
+} else if (!supabaseUrl.startsWith('https://') && !supabaseUrl.startsWith('http://')) {
+  console.error('Invalid Supabase URL: must start with http:// or https://');
+}
+
+const supabase = (supabaseUrl && supabaseKey && (supabaseUrl.startsWith('https://') || supabaseUrl.startsWith('http://')))
+  ? createClient(supabaseUrl, supabaseKey, {
+    auth: {
+      persistSession: false,
+    }
+  })
+  : null;
 
 /** 데이터 조회 */
 const handleGet = async (req: VercelRequest, res: VercelResponse) => {
+  if (!supabase) {
+    return res.status(500).json({ error: 'Supabase client not initialized' });
+  }
+
   const { data, error } = await supabase
     .from('web_vitals')
     .select('name, value, rating, created_at')
@@ -28,6 +47,10 @@ const handlePost = async (req: VercelRequest, res: VercelResponse) => {
     console.log('parsed body:', body);
 
     const { name, value, delta, rating, navigationType } = body;
+
+    if (!supabase) {
+      return res.status(500).json({ error: 'Supabase client not initialized' });
+    }
 
     const { error } = await supabase.from('web_vitals').insert([
       {
